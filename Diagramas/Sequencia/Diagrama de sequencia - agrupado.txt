@@ -1,0 +1,59 @@
+Diagrama de sequencia agrupado
+
+
+https://www.plantuml.com/plantuml
+
+//
+
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontColor #000000
+
+actor Visitante
+actor Socio
+actor Funcionario
+
+participant "Sistema" as Sistema
+database "Banco de Dados" as DB
+
+== Fluxo 1: Novo Usuário ==
+
+Visitante -> Sistema : Acessar sistema
+Visitante -> Sistema : Realizar cadastro
+Sistema -> DB : Salvar dados
+Visitante -> Sistema : Enviar solicitação
+Sistema -> DB : Registrar solicitação
+
+Visitante -> Sistema : Consultar status
+Sistema -> DB : Buscar status
+Sistema --> Visitante : Exibir status
+
+== Fluxo 2: Sócio ==
+
+Socio -> Sistema : Fazer login
+Sistema -> DB : Validar login
+Socio -> Sistema : Acessar dashboard
+
+Socio -> Sistema : Visualizar benefícios
+Sistema -> DB : Buscar benefícios
+
+Socio -> Sistema : Visualizar/editar dados
+Sistema -> DB : Atualizar dados
+
+== Fluxo 3: Funcionário ==
+
+Funcionario -> Sistema : Fazer login
+Sistema -> DB : Validar login
+
+Funcionario -> Sistema : Visualizar solicitações
+Sistema -> DB : Buscar solicitações
+
+Funcionario -> Sistema : Aprovar/Reprovar
+Sistema -> DB : Atualizar status
+
+Funcionario -> Sistema : Gerenciar associados
+Sistema -> DB : Consultar/editar dados
+
+@enduml
+
+\\

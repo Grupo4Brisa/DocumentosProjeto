@@ -1,0 +1,52 @@
+Diagrama de sequencia Funcionário ACIST
+
+https://www.plantuml.com/plantuml
+
+//
+
+
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontColor #000000
+actor Funcionario
+
+participant "Tela Admin" as Frontend
+participant "API / Backend" as Backend
+database "Banco de Dados" as DB
+
+Funcionario -> Frontend : Fazer login
+Frontend -> Backend : Enviar credenciais
+Backend -> DB : Validar login
+DB --> Backend : OK
+Backend -> Frontend : Login aprovado
+
+Funcionario -> Frontend : Visualizar solicitações
+
+Frontend -> Backend : Buscar solicitações pendentes
+Backend -> DB : Consultar solicitações
+DB --> Backend : Lista de solicitações
+Backend -> Frontend : Retorna lista
+
+Funcionario -> Frontend : Selecionar solicitação
+
+Frontend -> Backend : Buscar dados + documentos
+Backend -> DB : Consultar dados do usuário
+DB --> Backend : Dados completos
+Backend -> Frontend : Retorna dados
+
+Backend -> Backend : Validar dados e documentos
+
+alt Dados inválidos
+    Funcionario -> Frontend : Reprovar solicitação
+    Frontend -> Backend : Enviar reprovação
+    Backend -> DB : Atualizar status (Reprovado)
+    Backend -> Frontend : Confirmação
+else Dados válidos
+    Funcionario -> Frontend : Aprovar solicitação
+    Frontend -> Backend : Enviar aprovação
+    Backend -> DB : Atualizar status (Aprovado)
+    Backend -> Frontend : Confirmação
+end
+@enduml
+
+//

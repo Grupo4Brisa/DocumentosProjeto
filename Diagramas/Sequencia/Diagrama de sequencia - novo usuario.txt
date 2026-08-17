@@ -1,0 +1,40 @@
+Diagrama de sequencia para novo usuário
+
+
+https://www.plantuml.com/plantuml
+
+//
+
+
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontColor #000000
+actor Usuario
+
+participant "Tela de Cadastro" as Frontend
+participant "Funcionário ACIST" as Backend
+database "Banco de Dados" as DB
+
+Usuario -> Frontend : Acessa tela de cadastro
+
+Usuario -> Frontend : Preenche formulário
+Usuario -> Frontend : Clica em "Cadastrar"
+
+Frontend -> Backend : Enviar dados do usuário
+
+Backend -> Backend : Validar dados
+
+alt Dados inválidos
+    Backend -> Frontend : Retorna erro
+    Frontend -> Usuario : Exibir mensagem de erro
+else Dados válidos
+    Backend -> DB : Salvar usuário
+    DB --> Backend : Confirmação
+
+    Backend -> Frontend : Cadastro realizado
+    Frontend -> Usuario : Exibir sucesso
+end
+
+@enduml
+
+//

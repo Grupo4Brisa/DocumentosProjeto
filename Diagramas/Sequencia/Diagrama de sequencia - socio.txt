@@ -1,0 +1,68 @@
+Diagrama de sequencia Membro ativo
+
+https://www.plantuml.com/plantuml
+
+//
+
+
+@startuml
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+
+actor Socio
+
+participant "Tela de Login / Dashboard" as Frontend
+participant "API / Backend" as Backend
+database "Banco de Dados" as DB
+
+== Login ==
+
+Socio -> Frontend : Inserir login e senha
+Frontend -> Backend : Enviar credenciais
+Backend -> DB : Validar usuário
+DB --> Backend : Dados do usuário
+
+alt Credenciais inválidas
+    Backend -> Frontend : Retorna erro
+    Frontend -> Socio : Exibir mensagem
+else Credenciais válidas
+    Backend -> Frontend : Login aprovado
+    Frontend -> Socio : Exibir dashboard
+end
+
+== Visualização de dados ==
+
+Socio -> Frontend : Visualizar dados pessoais
+Frontend -> Backend : Solicitar dados
+Backend -> DB : Buscar dados
+DB --> Backend : Dados do sócio
+Backend -> Frontend : Retorna dados
+
+== Benefícios ==
+
+Socio -> Frontend : Visualizar benefícios
+Frontend -> Backend : Solicitar benefícios
+Backend -> DB : Buscar benefícios
+DB --> Backend : Lista de benefícios
+Backend -> Frontend : Retorna benefícios
+
+== Atualização de dados ==
+
+Socio -> Frontend : Editar dados
+Frontend -> Backend : Enviar atualização
+Backend -> Backend : Validar dados
+
+alt Dados inválidos
+    Backend -> Frontend : Retorna erro
+    Frontend -> Socio : Exibir mensagem
+else Dados válidos
+    Backend -> DB : Atualizar dados
+    DB --> Backend : Confirmação
+    Backend -> Frontend : Sucesso
+    Frontend -> Socio : Exibir confirmação
+end
+
+@enduml
+
+//

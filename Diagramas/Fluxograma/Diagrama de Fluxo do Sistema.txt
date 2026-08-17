@@ -1,0 +1,57 @@
+Diagrama de Fluxo do Sistema
+
+@startuml
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+
+start
+
+:Usuário acessa sistema;
+
+if (Possui cadastro?) then (Não)
+
+  :Realizar cadastro;
+  :Enviar solicitação;
+  :Aguardar análise;
+
+  if (Solicitação aprovada?) then (Sim)
+    :Torna-se sócio;
+  else (Não)
+    :Solicitação rejeitada;
+    stop
+  endif
+
+else (Sim)
+
+  :Realizar login;
+
+  if (Tipo de usuário?) then (Sócio)
+
+    :Acessar dashboard;
+    :Visualizar dados;
+    :Visualizar benefícios;
+
+    if (Deseja atualizar dados?) then (Sim)
+      :Atualizar dados;
+    endif
+
+  else (Funcionário)
+
+    :Acessar painel admin;
+    :Visualizar solicitações;
+
+    if (Aprovar?) then (Sim)
+      :Aprovar solicitação;
+    else
+      :Reprovar solicitação;
+    endif
+
+    :Gerenciar associados;
+
+  endif
+
+endif
+
+stop
+@enduml
